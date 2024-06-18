@@ -61,7 +61,7 @@ var keyWords = map[string]TokenType{
 	"let":    LET,
 	"if":     IF,
 	"else":   ELSE,
-	"ture":   TRUE,
+	"true":   TRUE,
 	"false":  FLASE,
 	"return": RETURN,
 }
