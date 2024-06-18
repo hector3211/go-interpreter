@@ -32,12 +32,23 @@ func (l *Lexer) NextToken() token.Token {
 
 	switch l.ch {
 	case '=':
-		// if l.peekChar() == '=' {
-		//     tok = token.CreateToken(token.EQUAL)
-		// }
-		tok = token.CreateToken(token.ASSIGN, l.ch)
+		if l.peekChar() == '=' {
+			ch := l.ch
+			l.ReadChar()
+			literal := string(ch) + string(l.ch)
+			tok = token.Token{Type: token.EQUAL, Literal: literal}
+		} else {
+			tok = token.CreateToken(token.ASSIGN, l.ch)
+		}
 	case '!':
-		tok = token.CreateToken(token.BANG, l.ch)
+		if l.peekChar() == '=' {
+			ch := l.ch
+			l.ReadChar()
+			literal := string(ch) + string(l.ch)
+			tok = token.Token{Type: token.NOTEQUAL, Literal: literal}
+		} else {
+			tok = token.CreateToken(token.BANG, l.ch)
+		}
 	case ';':
 		tok = token.CreateToken(token.SEMICOLON, l.ch)
 	case '(':
