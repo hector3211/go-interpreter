@@ -25,7 +25,7 @@ func TestNextToken(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	l := NewLexer(input)
+	l := New(input)
 
 	for i, tt := range tests {
 		tok := l.NextToken()
@@ -98,7 +98,7 @@ func TestNextTokenAdvanced(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}
-	l := NewLexer(input)
+	l := New(input)
 
 	for i, tt := range tests {
 		tok := l.NextToken()
@@ -222,7 +222,7 @@ func TestNextTokenAdvancedTwo(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}
-	l := NewLexer(input)
+	l := New(input)
 
 	for i, tt := range tests {
 		tok := l.NextToken()

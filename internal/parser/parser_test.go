@@ -7,6 +7,12 @@ import (
 )
 
 func TestLetStatements(t *testing.T) {
+	// incorrectInput := `
+	//    let x = 5;
+	//    let = 10;
+	//
+	//    let 8080;
+	//    `
 	input := `
     let x = 5;
     let y = 10;
@@ -14,13 +20,12 @@ func TestLetStatements(t *testing.T) {
     let foobar = 8080;
     `
 
-	l := lexer.NewLexer(input)
+	l := lexer.New(input)
 	p := New(l)
 
 	program := p.ParseProgram()
-	if program == nil {
-		t.Fatalf("parseProgram() returned nil")
-	}
+
+	checkParserErrors(t, p)
 
 	if len(program.Statements) != 3 {
 		t.Fatalf("prgram.Statements returned less than 3 statements\n got: %d", len(program.Statements))
@@ -40,6 +45,21 @@ func TestLetStatements(t *testing.T) {
 			return
 		}
 	}
+}
+
+func checkParserErrors(t *testing.T, p *Parser) {
+	errors := p.Errors()
+	if len(errors) == 0 {
+		return
+	}
+
+	t.Errorf("parser has %d errors", len(errors))
+
+	for _, msg := range errors {
+		t.Errorf("parser error: %q", msg)
+	}
+
+	t.FailNow()
 }
 
 func testLetStatement(t *testing.T, s ast.Statement, name string) bool {
